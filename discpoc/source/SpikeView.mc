@@ -4,7 +4,7 @@ import Toybox.Position;
 import Toybox.System;
 import Toybox.WatchUi;
 
-class discpocView extends WatchUi.View {
+class SpikeView extends WatchUi.View {
 
     function initialize() {
         View.initialize();

@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class discpocApp extends Application.AppBase {
+class SpikeApp extends Application.AppBase {
 
     var spike as Spike?;
 
@@ -24,13 +24,13 @@ class discpocApp extends Application.AppBase {
     }
 
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [ new discpocView(), new discpocDelegate() ];
+        return [ new SpikeView(), new SpikeDelegate() ];
     }
 
 }
 
-function getApp() as discpocApp {
-    return Application.getApp() as discpocApp;
+function getApp() as SpikeApp {
+    return Application.getApp() as SpikeApp;
 }
 
 function getSpike() as Spike {
