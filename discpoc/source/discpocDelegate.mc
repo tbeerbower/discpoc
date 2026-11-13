@@ -1,14 +1,34 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 
+// START marks a throw, BACK/LAP completes the hole, long-press UP opens the menu.
 class discpocDelegate extends WatchUi.BehaviorDelegate {
 
     function initialize() {
         BehaviorDelegate.initialize();
     }
 
+    function onSelect() as Boolean {
+        getSpike().onStartPressed();
+        return true;
+    }
+
+    function onBack() as Boolean {
+        return getSpike().onBackPressed();
+    }
+
     function onMenu() as Boolean {
-        WatchUi.pushView(new Rez.Menus.MainMenu(), new discpocMenuDelegate(), WatchUi.SLIDE_UP);
+        var spike = getSpike();
+        var menu = new WatchUi.Menu2({ :title => "Spike" });
+        if (spike.isRecording()) {
+            menu.addItem(new WatchUi.MenuItem("Undo last throw", null, :undo, null));
+            menu.addItem(new WatchUi.MenuItem("End and save", null, :save, null));
+            menu.addItem(new WatchUi.MenuItem("Discard round", null, :discard, null));
+        } else if (spike.resumed) {
+            menu.addItem(new WatchUi.MenuItem("Discard stored round", null, :discard, null));
+        }
+        menu.addItem(new WatchUi.MenuItem("GPS mode", spike.tracker.modeLabel, :gps, null));
+        WatchUi.pushView(menu, new discpocMenuDelegate(), WatchUi.SLIDE_UP);
         return true;
     }
 

@@ -4,19 +4,25 @@ import Toybox.WatchUi;
 
 class discpocApp extends Application.AppBase {
 
+    var spike as Spike?;
+
     function initialize() {
         AppBase.initialize();
     }
 
-    // onStart() is called on application start up
     function onStart(state as Dictionary?) as Void {
+        var s = new Spike();
+        s.tracker.enable();
+        spike = s;
     }
 
-    // onStop() is called when your application is exiting
     function onStop(state as Dictionary?) as Void {
+        var s = spike;
+        if (s != null) {
+            s.tracker.disable();
+        }
     }
 
-    // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
         return [ new discpocView(), new discpocDelegate() ];
     }
@@ -25,4 +31,8 @@ class discpocApp extends Application.AppBase {
 
 function getApp() as discpocApp {
     return Application.getApp() as discpocApp;
+}
+
+function getSpike() as Spike {
+    return getApp().spike as Spike;
 }
